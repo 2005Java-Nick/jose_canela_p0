@@ -6,9 +6,17 @@ import com.revature.DAO.*;
 import com.revature.Objects.*;
 import com.revature.Services.*;
 
+/**
+ * @author josecanela
+ *
+ */
+
 public class DealershipApp {
 	static User user = new User(); //Instantiate a user
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RegisterUser regUser = new RegisterUser();
@@ -24,6 +32,9 @@ public class DealershipApp {
 	}
 
 //Main Menu
+	/**
+	 * 
+	 */
 	public static void mainMenu() {
 		AuthenticateUser authUser = new AuthenticateUser();
 		Boolean run = true;
@@ -66,6 +77,9 @@ public class DealershipApp {
 	}
 
 //SignIn Menu
+	/**
+	 * 
+	 */
 	public static void signInMenu() {
 		AuthenticateUser authUser = new AuthenticateUser();
 		String username;
@@ -123,6 +137,9 @@ public class DealershipApp {
 	}
 
 //Registration Menu
+	/**
+	 * 
+	 */
 	public static void registrationMenu() {
 		RegisterUser regUser = new RegisterUser();
 		String userInput;
@@ -173,6 +190,9 @@ public class DealershipApp {
 	}
 
 //CustomerMenu
+	/**
+	 * @param username
+	 */
 	public static void customerMenu(String username) {
 		String userInput, vinNumber;
 		Double offer;
@@ -232,6 +252,9 @@ public class DealershipApp {
 	}
 
 //EmployeeMenu
+	/**
+	 * @param username
+	 */
 	public static void employeeMenu(String username) {
 		ViewAudi viewAudi = new ViewAudi();
 		BidOnAudiCar bidOnAudi = new BidOnAudiCar();
