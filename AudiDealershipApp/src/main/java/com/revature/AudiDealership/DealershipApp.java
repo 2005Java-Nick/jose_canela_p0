@@ -11,41 +11,9 @@ public class DealershipApp {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// Starts all services
-//		UserAuthenticationService userAuthServ = new UserAuthenticationService();
 		RegisterUser regUser = new RegisterUser();
-//		UserRemovalService userRemvServ = new UserRemovalService();
 		RegisterAudi regAudi = new RegisterAudi();
-//		CarViewService carViewServ = new CarViewService();
-//		CarBidService carBidServ = new CarBidService();
-//		CustomerPaymentService custPayServ = new CustomerPaymentService();
-//		userRegServ.registerCustomer("Wes", "Wes");
-//		userRegServ.registerEmployee("Wes", "Wes", "root");
-//		carRegServ.addCar("vin1", "Nissan", "Rouge", "2013", 20000D);
-//		carRegServ.addCar("vin2", "Nissan", "Altima", "2016", 13000D);
-//		carViewServ.viewCars();
-//		
-//		carBidServ.addOffer("vin2", "Wesley", 12000D);
-//		carBidServ.addOffer("vin1", "Wesley", 15000D);
-//		carBidServ.addOffer("vin2", "Krista", 2000D);
-//		carViewServ.viewCars();
-//		carBidServ.getCarOffer("vin2", "Rando");
-//		carBidServ.getCurentOffers("vin2", "Rando");
-//		carBidServ.acceptOffer("Wesley", "vin2");
-//		carBidServ.acceptOffer("Wesley", "vin1");
-//		
-//		custPayServ.viewCarsAndPaymentInfo("Wesley");
-//		
-//		custPayServ.makePayment("Wesley");
-//		custPayServ.makePayment("Wesley");
-//		custPayServ.customerPaymentHistory("Wesley");
-//		
-//		custPayServ.employeePaymentView();
-//		
-//		Boolean run = true;
-//		Scanner scanner = new Scanner(System.in);
-//		String userInput;
-//		custPayServ.viewCarsAndPaymentInfo("Wesley");
+		
 		UserDAO userDAO = new UserDAO();
 		UserDatabase.setEmployees(userDAO.readEmployees());
 		UserDatabase.setCustomers(userDAO.readCustomer());
@@ -322,7 +290,7 @@ public class DealershipApp {
 				case "N":
 					employeeMenu(username);
 				default:
-					System.out.println("Invalid Endtry");
+					System.out.println("Invalid Entry");
 			}
 			
 			break;
