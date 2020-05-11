@@ -11,12 +11,14 @@ import com.revature.Objects.Employee;
 
 public class UserDAO {
 	// Each customer balance is kept in this data object
-		public void createEmployeeDatabase(HashMap<String, Employee> employees) {
+		public boolean createEmployeeDatabase(HashMap<String, Employee> employees) {
 			try (FileOutputStream fos = new FileOutputStream("UserDatabase.dat");
 					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 				oos.writeObject(employees);
+				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
 
@@ -27,18 +29,22 @@ public class UserDAO {
 				employees = (HashMap<String, Employee>) ois.readObject();
 			} catch (IOException e) {
 				e.printStackTrace();
+				return null;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+				return null;
 			}
 			return employees;
 		}
 
-		public void createCustomerDatabase(HashMap<String, Employee> customers) {
+		public boolean createCustomerDatabase(HashMap<String, Customer> customers) {
 			try (FileOutputStream fos = new FileOutputStream("UserDatabase.dat");
 					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 				oos.writeObject(customers);
+				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
 
@@ -49,8 +55,10 @@ public class UserDAO {
 				customers = (HashMap<String, Customer>) ois.readObject();
 			} catch (IOException e) {
 				e.printStackTrace();
+				return null;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+				return null;
 			}
 			return customers;
 		}

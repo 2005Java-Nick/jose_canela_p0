@@ -9,13 +9,15 @@ import java.util.HashMap;
 import com.revature.Objects.AudiCar;
 
 public class AudiCarDAO {
-	public void createAudiCarDatabase(HashMap<String, AudiCar> lot) {
+	public boolean createAudiCarDatabase(HashMap<String, AudiCar> lot) {
 
 		try (FileOutputStream fos = new FileOutputStream("AudiCarLot.dat");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);) {
 			oos.writeObject(lot);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -26,8 +28,10 @@ public class AudiCarDAO {
 			lot = (HashMap<String, AudiCar>) ois.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			return null;
 		}
 
 		return lot;

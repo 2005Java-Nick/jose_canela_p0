@@ -7,6 +7,8 @@ import com.revature.Services.*;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,8 +17,7 @@ import org.junit.Test;
 
 public class AudiDealershipAppTest {
 	UserPolicy userPolicy;
-	
-	
+	Employee Jim = (Employee) new User("jim123", "Pigs123", userPolicy);
 	/*
 	 * @Test - marks the public void method as a test case.
 	 * 
@@ -33,7 +34,9 @@ public class AudiDealershipAppTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		//UserPolicy userPolicy;
+		UserDatabase userDB = new UserDatabase();
+		//Employee Jim = new Employee("jim123", "Pigs123", userPolicy);
+		//userDB.
 		
 	}
 
@@ -68,6 +71,10 @@ public class AudiDealershipAppTest {
 	
 	@Test
 	public void testUserDAO() {
+		HashMap<String, Employee> employees = new HashMap<String, Employee>();
+		employees.put(, value)
+		HashMap<String, Customer> customers = new HashMap<String, Customer>();
+		
 		createEmployeeDatabase(employees);
 		readEmployees();
 		createCustomerDatabase(customers);
@@ -133,6 +140,7 @@ public class AudiDealershipAppTest {
 	
 	@Test
 	public void testAudiCarDAO() {
+		
 		createAudiCarDatabase(lot)
 		readAudiCardatabase();
 		
