@@ -7,6 +7,7 @@ import com.revature.Services.*;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.After;
@@ -17,7 +18,20 @@ import org.junit.Test;
 
 public class AudiDealershipAppTest {
 	UserPolicy userPolicy;
+	UserDAO userDAO;
+	AudiCarDAO audiDAO;
+	
+	
+	
 	Employee Jim = (Employee) new User("jim123", "Pigs123", userPolicy);
+	Customer Kim = (Customer) new User("kim123", "Dog123", userPolicy);
+	
+	Integer cost = 33300;
+	Double price = new Double(cost);
+	
+	AudiCar audi = new AudiCar("2G1WL52M4W9218917", "A3", "2020", price, true);
+	ArrayList<AudiCar> carsOwned = new ArrayList<AudiCar>();
+
 	/*
 	 * @Test - marks the public void method as a test case.
 	 * 
@@ -72,13 +86,14 @@ public class AudiDealershipAppTest {
 	@Test
 	public void testUserDAO() {
 		HashMap<String, Employee> employees = new HashMap<String, Employee>();
-		employees.put(, value)
+		employees.put(Jim.getUsername(), Jim);
 		HashMap<String, Customer> customers = new HashMap<String, Customer>();
+		customers.put(Kim.getUsername(),Kim);
 		
-		createEmployeeDatabase(employees);
-		readEmployees();
-		createCustomerDatabase(customers);
-		readCustomer();
+		assertTrue(userDAO.createEmployeeDatabase(employees));
+		assertNotNull(userDAO.readEmployees());
+		assertTrue(userDAO.createCustomerDatabase(customers));
+		assertNotNull(userDAO.readCustomer());
 		
 	}
 	
@@ -103,20 +118,16 @@ public class AudiDealershipAppTest {
 	}
 	
 	@Test
-	public void testCustomerActions() {
-		public Customer();
-		addCars(car);
-		addPayment(date, payment);
+	public void testCustomer() {
+		assertEquals("kim123", Kim.getUsername());
+		assertEquals("Dog123", Kim.getPassword());
+		assertEquals(userPolicy, Kim.getUserPolicy());
 		
 	}
 	
 	
 	@Test
 	public void testCreatingAudiCars() {
-		Integer cost = 33300;
-		Double price = new Double(cost);
-		
-		AudiCar audi = new AudiCar("2G1WL52M4W9218917", "A3", "2020", price, true);
 		assertEquals("2G1WL52M4W9218917", audi.getVinNumber());
 		assertEquals("A3", audi.getModel());
 		assertEquals("2020", audi.getYear());
@@ -135,14 +146,17 @@ public class AudiDealershipAppTest {
 	public void testAudiCarDatabase() {
 		addCar(vin, car);
 		getAudiCar(carVin);
+		getLot();
 		
 	}
 	
 	@Test
 	public void testAudiCarDAO() {
+		HashMap<String, AudiCar> lot = new HashMap<String, AudiCar>();
+		lot.put(audi.getVinNumber(), audi);
 		
-		createAudiCarDatabase(lot)
-		readAudiCardatabase();
+		assertTrue(audiDAO.createAudiCarDatabase(lot));
+		assertNotNull(audiDAO.readAudiCarDatabase());
 		
 	}
 	
