@@ -73,6 +73,7 @@ public class DealershipApp {
 
 		scan.close();
 		System.out.println("Goodbye!");
+		System.exit(0);
 	}
 
 //SignIn Menu
@@ -101,10 +102,11 @@ public class DealershipApp {
 			System.out.println("Password : ");
 			userInput = scan.nextLine();
 			password = userInput;
-			System.out.println(authUser.authenticateCustomer(username, password));
+			//System.out.println(authUser.authenticateCustomer(username, password));
 			if (authUser.authenticateCustomer(username, password)) {
 				customerMenu(username);
 			} else {
+				//System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 				signInMenu();
 			}
 
@@ -321,7 +323,7 @@ public class DealershipApp {
 			case "N":
 				employeeMenu(username);
 			default:
-				System.out.println("Invalid Entry");
+				System.out.println("Invalid Entry\n");
 			}
 
 			break;
@@ -340,7 +342,7 @@ public class DealershipApp {
 			employeeMenu(username);
 			break;
 		case "5":
-			System.out.println("--SIGNED OUT--");
+			System.out.println("--SIGNED OUT--\n");
 			signInMenu();
 			break;
 		default:

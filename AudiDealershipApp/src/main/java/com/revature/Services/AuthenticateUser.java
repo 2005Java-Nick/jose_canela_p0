@@ -24,7 +24,7 @@ public class AuthenticateUser {
 
 		} else if (!UserDatabase.getCustomers().containsKey(username)) {
 			// TODO: Login User not found
-			System.out.println("User does not exist");
+			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 			return false;
 		} else {
 			System.out.println("Failed to login");
@@ -47,7 +47,7 @@ public class AuthenticateUser {
 			// TODO: Log success
 			return true;
 		} else {
-			System.out.println("Failed to login");
+			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 			// TODO: Log login failure
 			return false;
 		}
