@@ -9,13 +9,22 @@ import java.util.concurrent.TimeUnit;
 
 import com.revature.Objects.*;
 
+/**
+ * @author josecanela
+ *
+ */
 public class ManageAudiCarPayments {
 	public void removeDropOffers(String carVin, String employee, String password) {
 		// Grabs the offer on a car that is in the lot and deletes the customer entry
 		AudiCarDatabase.getLot().get(carVin).getOffers().clear();
 
 	}
-	
+
+	/**
+	 * @param customerUsername
+	 * @param carVin
+	 * @return
+	 */
 	public Double calculateMonthlyPayment(String customerUsername, String carVin) {
 		AudiCar car = AudiCarDatabase.getAudiCar(carVin);
 		car.setRemainingPayments(24);
@@ -28,16 +37,22 @@ public class ManageAudiCarPayments {
 
 	}
 
+	/**
+	 * @param customer
+	 */
 	public void viewAudiCarsAndPaymentInfo(String customer) {
 		Customer user = UserDatabase.getCustomer(customer);
 		System.out.println("Vehicles Owned by: " + customer + "\t Total Balance Due: $" + user.getMonthlyPayment());
 		for (AudiCar car : user.getCarsOwned()) {
-			System.out.println("|-Vehicle: " + car.getYear() + ", " + car.getModel() + ": \n"
-					+ "|-Original Price: " + car.getPrice() + "Monthly Installments: $" + car.getPrice() / 24
-					+ "Remaining payments:" + car.getRemainingPayments() + "\n");
+			System.out.println("|-Vehicle: " + car.getYear() + ", " + car.getModel() + ": \n" + "|-Original Price: "
+					+ car.getPrice() + "Monthly Installments: $" + car.getPrice() / 24 + "Remaining payments:"
+					+ car.getRemainingPayments() + "\n");
 		}
 	}
 
+	/**
+	 * @param customer
+	 */
 	public void makePayment(String customer) {
 //	   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //	   LocalDateTime now = LocalDateTime.now();  
@@ -69,6 +84,9 @@ public class ManageAudiCarPayments {
 
 	}
 
+	/**
+	 * @param customer
+	 */
 	public void customerPaymentHistory(String customer) {
 		// TODO: Users should be able to see their payments
 		Customer user = UserDatabase.getCustomer(customer);
@@ -81,6 +99,9 @@ public class ManageAudiCarPayments {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void employeePaymentView() {
 		// TODO: Employees should be able to see all of the payments
 		HashMap<String, Customer> payments = UserDatabase.getCustomers();

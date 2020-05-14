@@ -12,23 +12,26 @@ import com.revature.Services.*;
  */
 
 public class DealershipApp {
-	static User user = new User(); //Instantiate a user
+	static User user = new User(); // Instantiate a user
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		RegisterUser regUser = new RegisterUser();
-		RegisterAudi regAudi = new RegisterAudi();
-		
+		// RegisterUser regUser = new RegisterUser();
+		// RegisterAudi regAudi = new RegisterAudi();
+
 		UserDAO userDAO = new UserDAO();
-		UserDatabase.setEmployees(userDAO.readEmployees());
-		UserDatabase.setCustomers(userDAO.readCustomer());
+		UserDatabase userDatabase = new UserDatabase();
+		AudiCarDatabase audiCarDatabase = new AudiCarDatabase();
+		// UserDatabase.setEmployees(userDAO.readEmployees());
+		// UserDatabase.setCustomers(userDAO.readCustomer());
 		AudiCarDAO audiCarDAO = new AudiCarDAO();
-		AudiCarDatabase.setLot(audiCarDAO.readAudiCarDatabase());
+		DealershipDAO dealershipDAO = new DealershipDAO();
+		// AudiCarDatabase.setLot(audiCarDAO.readAudiCarDatabase());
 		mainMenu();
-		
+
 	}
 
 //Main Menu
@@ -51,18 +54,14 @@ public class DealershipApp {
 
 			switch (userInput.toUpperCase()) {
 			case "1":
-			case "LOGIN":
 				signInMenu();
 				break;
 
 			case "2":
 				registrationMenu();
 				break;
-			case "CREATE":
-				break;
-			case "3":
 
-			case "EXIT":
+			case "3":
 				run = false;
 				break;
 			default:
@@ -70,7 +69,7 @@ public class DealershipApp {
 				break;
 			}
 
-		} while (run);
+		} while (run == true);
 
 		scan.close();
 		System.out.println("Goodbye!");
@@ -89,7 +88,7 @@ public class DealershipApp {
 
 		// Prompt
 		System.out.println("LOGIN MENU:");
-		System.out.println("1. Customer Login: \n2. Employee Login: ");
+		System.out.println("1. Customer Login: \n2. Employee Login: \n3. Exit");
 		userInput = scan.nextLine();
 
 		switch (userInput) {
@@ -105,8 +104,7 @@ public class DealershipApp {
 			System.out.println(authUser.authenticateCustomer(username, password));
 			if (authUser.authenticateCustomer(username, password)) {
 				customerMenu(username);
-			}
-			else {
+			} else {
 				signInMenu();
 			}
 
@@ -123,10 +121,14 @@ public class DealershipApp {
 			password = userInput;
 			if (authUser.authenticateEmployee(username, password)) {
 				employeeMenu(username);
-			}else {
+			} else {
 				signInMenu();
 			}
 
+			break;
+
+		case "3":
+			mainMenu();
 			break;
 
 		default:
@@ -149,7 +151,7 @@ public class DealershipApp {
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("\nREGISTRATION MENU");
-		System.out.println("|-1. Customer Registration: \n|-2. Employee Registration: ");
+		System.out.println("|-1. Customer Registration: \n|-2. Employee Registration: \n|-3. Exit\n");
 		userInput = scan.nextLine();
 
 		switch (userInput) {
@@ -183,6 +185,10 @@ public class DealershipApp {
 			signInMenu();
 			break;
 
+		case "3":
+			mainMenu();
+			break;
+
 		default:
 			System.out.println("Invalid choice, try again...");
 			break;
@@ -201,7 +207,8 @@ public class DealershipApp {
 		BidOnAudiCar bidOnAudi = new BidOnAudiCar();
 
 		System.out.println("CUSTOMER MENU: \n Hello " + username);
-		System.out.println("|-1. Explore Cars: \n|-2. Make Offer: \n|-3. View Cars: \n|-4. View Remaining Balance: \n|-5. ");
+		System.out.println(
+				"|-1. Explore Cars: \n|-2. Make Offer: \n|-3. View Cars: \n|-4. View Remaining Balance: \n|-5. Sign Out");
 		userInput = scan.nextLine();
 
 		switch (userInput) {
@@ -214,7 +221,7 @@ public class DealershipApp {
 			System.out.println("--MAKE OFFER--");
 			System.out.println("Enter Vehicle Identification Number(VIN): ");
 			vinNumber = scan.nextLine();
-			//Clear?
+			// Clear?
 			System.out.println("Enter Amount: ");
 			offer = scan.nextDouble();
 			bidOnAudi.addOffer(vinNumber, username, offer);
@@ -224,7 +231,7 @@ public class DealershipApp {
 			System.out.println("--VIEW CARS--");
 			System.out.println("Enter Vehicle Identification Number(VIN): ");
 			vinNumber = scan.nextLine();
-			//Clear?
+			// Clear?
 			System.out.println("Enter Amount: ");
 			offer = scan.nextDouble();
 			bidOnAudi.addOffer(vinNumber, username, offer);
@@ -242,7 +249,7 @@ public class DealershipApp {
 			customerMenu(username);
 			break;
 		case "5":
-			System.out.println("--SIGNOUT--");
+			System.out.println("--SIGNED OUT--");
 			mainMenu();
 			break;
 		default:
@@ -266,7 +273,8 @@ public class DealershipApp {
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("\nEMPLOYEE MENU: \n Hello " + username);
-		System.out.println("|-1. Add Cars: \n|-2. Accept Offers: \n|-3. Remove Car From Lot: \n|-4. View All Payments: \n|-5. Signout");
+		System.out.println(
+				"|-1. Add Cars: \n|-2. Accept Offers: \n|-3. Remove Car From Lot: \n|-4. View All Payments: \n|-5. Sign Out");
 		userInput = scan.nextLine();
 
 		switch (userInput) {
@@ -291,31 +299,31 @@ public class DealershipApp {
 				employeeMenu(username);
 				System.out.println("Add Another Audi? (Y)");
 				exit = scan.nextLine();
-				
+
 			} while (exit.equals("Y"));
 			employeeMenu(username);
 			break;
 		case "2":
 			System.out.println("\n--ACCEPT OFFER--");
-			
+
 			System.out.println("Enter VIN: ");
 			vinNumber = scan.nextLine();
 			bidOnAudi.getCurrentOffers(vinNumber);
 			System.out.println("Do you want to accept any offers?");
-			switch (userInput){
-				case "Y":
-					System.out.println("Enter Customer: ");
-					customer = scan.nextLine();
-					bidOnAudi.acceptOffer(customer, vinNumber);
-					customer = "";
-					vinNumber = "";
-					break;
-				case "N":
-					employeeMenu(username);
-				default:
-					System.out.println("Invalid Entry");
+			switch (userInput) {
+			case "Y":
+				System.out.println("Enter Customer: ");
+				customer = scan.nextLine();
+				bidOnAudi.acceptOffer(customer, vinNumber);
+				customer = "";
+				vinNumber = "";
+				break;
+			case "N":
+				employeeMenu(username);
+			default:
+				System.out.println("Invalid Entry");
 			}
-			
+
 			break;
 		case "3":
 			System.out.println("--REMOVE CARS--");
@@ -332,7 +340,7 @@ public class DealershipApp {
 			employeeMenu(username);
 			break;
 		case "5":
-			System.out.println("--SIGNOUT--");
+			System.out.println("--SIGNED OUT--");
 			signInMenu();
 			break;
 		default:
