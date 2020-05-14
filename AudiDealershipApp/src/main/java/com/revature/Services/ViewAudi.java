@@ -18,7 +18,7 @@ public class ViewAudi {
 	 */
 	public void viewAudis() {
 		Iterator iterator = cars.entrySet().iterator();
-		System.out.println("--Vin Number------Model-----------Year------------Offers--------");
+		System.out.println("--------------Vin Number-------------Model-----------Year------------Offers--------");
 		while (iterator.hasNext()) {
 			Map.Entry<String, AudiCar> pair = (Map.Entry<String, AudiCar>) iterator.next();
 			System.out.println(pair.getValue().getCarRecord());

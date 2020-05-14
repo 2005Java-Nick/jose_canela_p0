@@ -231,12 +231,13 @@ public class DealershipApp {
 			break;
 		case "3":
 			System.out.println("--VIEW CARS--");
-			System.out.println("Enter Vehicle Identification Number(VIN): ");
-			vinNumber = scan.nextLine();
+			//System.out.println("Enter Vehicle Identification Number(VIN): ");
+			//vinNumber = scan.nextLine();
 			// Clear?
-			System.out.println("Enter Amount: ");
-			offer = scan.nextDouble();
-			bidOnAudi.addOffer(vinNumber, username, offer);
+			ManageAudiCarPayments.viewAudiCarsAndPaymentInfo(username);
+			//System.out.println("Enter Amount: ");
+			//offer = scan.nextDouble();
+			//bidOnAudi.addOffer(vinNumber, username, offer);
 			customerMenu(username);
 			break;
 		case "4":
@@ -307,18 +308,20 @@ public class DealershipApp {
 			break;
 		case "2":
 			System.out.println("\n--ACCEPT OFFER--");
-
+			viewAudi.viewAudis();
 			System.out.println("Enter VIN: ");
 			vinNumber = scan.nextLine();
 			bidOnAudi.getCurrentOffers(vinNumber);
-			System.out.println("Do you want to accept any offers?");
-			switch (userInput) {
+			System.out.println("Do you want to accept any offers? (Y) or (N)");
+			exit = scan.nextLine();
+			switch (exit) {
 			case "Y":
 				System.out.println("Enter Customer: ");
 				customer = scan.nextLine();
 				bidOnAudi.acceptOffer(customer, vinNumber);
 				customer = "";
 				vinNumber = "";
+				employeeMenu(username);
 				break;
 			case "N":
 				employeeMenu(username);

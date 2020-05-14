@@ -40,12 +40,12 @@ public class ManageAudiCarPayments {
 	/**
 	 * @param customer
 	 */
-	public void viewAudiCarsAndPaymentInfo(String customer) {
+	public static void viewAudiCarsAndPaymentInfo(String customer) {
 		Customer user = UserDatabase.getCustomer(customer);
 		System.out.println("Vehicles Owned by: " + customer + "\t Total Balance Due: $" + user.getMonthlyPayment());
 		for (AudiCar car : user.getCarsOwned()) {
-			System.out.println("|-Vehicle: " + car.getYear() + ", " + car.getModel() + ": \n" + "|-Original Price: "
-					+ car.getPrice() + "Monthly Installments: $" + car.getPrice() / 24 + "Remaining payments:"
+			System.out.println("|-Vehicle: " + "VIN: " + car.getVinNumber() + ", Year: " + car.getYear() + ", Model: " + car.getModel() + " \n" + "|-Original Price: "
+					+ car.getPrice() + " Monthly Installments: $" + car.getPrice() / 24 + " Remaining payments:"
 					+ car.getRemainingPayments() + "\n");
 		}
 	}
