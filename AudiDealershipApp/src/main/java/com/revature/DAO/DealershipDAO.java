@@ -14,7 +14,6 @@ public final class DealershipDAO implements Serializable {
 	 * 
 	 */
 	public DealershipDAO() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 

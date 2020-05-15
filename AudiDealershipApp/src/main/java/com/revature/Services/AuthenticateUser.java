@@ -1,5 +1,7 @@
 package com.revature.Services;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -7,6 +9,7 @@ import com.revature.Objects.*;
  *
  */
 public class AuthenticateUser {
+	private static Logger log = Logger.getRootLogger();
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	// CUSTOMER LOGIN
 	
@@ -16,20 +19,22 @@ public class AuthenticateUser {
 	 * @return
 	 */
 	public boolean authenticateCustomer(String username, String password) {
-		//TODO: LOG ---System.out Info---  System.out.println(userDatabase.getCustomers());
+		log.info("Current Customers who have registered: "+ userDatabase.getCustomers());
+		
 		if (userDatabase.getCustomers().containsKey(username)
 				&& userDatabase.getCustomer(username).getPassword().equals(password)) {
-			System.out.println("You're now Logged in");
-			// TODO: Log success
+			
+			log.info("AuthenticateUser:authenticateCustomer:Customer("+ username +") Login successful!");
+
 			return true;
 
 		} else if (!userDatabase.getCustomers().containsKey(username)) {
-			// TODO: Login User not found
+			log.info("AuthenticateUser:authenticateCustomer:Customer failed to login - invalid username or password");
+			
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 			return false;
 		} else {
-			System.out.println("Failed to login");
-			// TODO: Log login failure
+			log.info("AuthenticateUser:authenticateCustomer:Customer failed to login.");
 			return false;
 		}
 	}
@@ -44,12 +49,14 @@ public class AuthenticateUser {
 	public boolean authenticateEmployee(String username, String password) {
 		if (userDatabase.getEmployees().containsKey(username)
 				&& userDatabase.getEmployee(username).getPassword().equals(password)) {
-			System.out.println("You're now Logged in");
-			// TODO: Log success
+			
+			log.info("AuthenticateUser:authenticateEmployee:Employee("+ username +") Login successful!");
 			return true;
 		} else {
+			log.info("AuthenticateUser:authenticateEmployee:Employee failed to login - invalid username or password");
+			
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
-			// TODO: Log login failure
+		
 			return false;
 		}
 	}

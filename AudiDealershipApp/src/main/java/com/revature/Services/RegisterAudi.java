@@ -1,5 +1,7 @@
 package com.revature.Services;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -7,6 +9,8 @@ import com.revature.Objects.*;
  *
  */
 public class RegisterAudi {
+	private static Logger log = Logger.getRootLogger();
+	
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
 	
 	/**
@@ -24,11 +28,11 @@ public class RegisterAudi {
 			newAudiCar.setYear(year);
 			newAudiCar.setPrice(price);
 			audiCarDatabase.addCar(vinNumber, newAudiCar);
-			// TODO: Log car created
-			System.out.println("Car created");
+			
+			log.info("RegisterAudi:addAudiCar:Car created/registered");
 		} else {
-			// TODO: Log car already exists
-			System.out.println("Car already exists");
+			log.info("RegisterAudi:addAudiCar:Car already exists in lot");
+			System.out.println("Car ("+ vinNumber+ ", "+ model+ ", "+ year +", "+ price +") already exists in the car lot.");
 		}
 
 	}

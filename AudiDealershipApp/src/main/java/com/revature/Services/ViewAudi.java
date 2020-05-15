@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -12,6 +14,8 @@ import com.revature.Objects.*;
  *
  */
 public class ViewAudi {
+	private static Logger log = Logger.getRootLogger();
+	
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
 	
 	HashMap<String, AudiCar> cars = audiCarDatabase.getLot();
@@ -25,7 +29,8 @@ public class ViewAudi {
 		while (iterator.hasNext()) {
 			Map.Entry<String, AudiCar> pair = (Map.Entry<String, AudiCar>) iterator.next();
 			System.out.println(pair.getValue().getCarRecord());
-
+			
+			log.info("ViewAudi:viewAudis:The available Audi's on the car lot were viewed");
 		}
 	}
 }

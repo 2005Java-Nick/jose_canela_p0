@@ -1,5 +1,7 @@
 package com.revature.Services;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -7,6 +9,8 @@ import com.revature.Objects.*;
  *
  */
 public class RemoveRegisteredAudi {
+	private static Logger log = Logger.getRootLogger();
+	
 	AuthenticateUser authUser = new AuthenticateUser();
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
 	
@@ -16,6 +20,6 @@ public class RemoveRegisteredAudi {
 	public void removeAudiCar(String carVin) {
 		// Remove Audi's from the lot and thus, the database using its VIN
 		audiCarDatabase.getLot().remove(carVin);
-
+		log.info("RemoveRegisteredAudi:removeAudiCar:Car with VIN ("+ carVin +") removed");
 	}
 }

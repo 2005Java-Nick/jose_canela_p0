@@ -1,5 +1,7 @@
 package com.revature.Services;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -7,6 +9,8 @@ import com.revature.Objects.*;
  *
  */
 public class RemoveUser {
+	private static Logger log = Logger.getRootLogger();
+	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	AuthenticateUser authUser = new AuthenticateUser();
 
@@ -18,8 +22,8 @@ public class RemoveUser {
 	public void removeUser(String username, String password, String customer) {
 		if (authUser.authenticateEmployee(username, password)) {
 			userDatabase.getCustomers().remove(customer);
-			// TODO: Log user deletion
-			System.out.println("User Deleted");
+			
+			log.info("RemoveUser:removeUser:User ("+ username +", "+ password +", "+ customer +") removed");
 		}
 
 	}

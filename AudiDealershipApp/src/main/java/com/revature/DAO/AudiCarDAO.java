@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import com.revature.Objects.AudiCar;
+import org.apache.log4j.Logger;
 
 /**
  * @author josecanela
@@ -15,7 +16,7 @@ import com.revature.Objects.AudiCar;
  */
 @SuppressWarnings("serial")
 public class AudiCarDAO implements Serializable {
-
+	private static Logger log = Logger.getRootLogger();
 	/**
 	 * @param lot
 	 * @return
@@ -27,7 +28,7 @@ public class AudiCarDAO implements Serializable {
 			oos.writeObject(lot);
 			return true;
 		} catch (IOException e) {
-			// log.error(e.printStackTrace());
+			log.error("AudiCarDAO:createAudiCarDatabase:IoException");
 			return false;
 		}
 	}
@@ -42,10 +43,10 @@ public class AudiCarDAO implements Serializable {
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			lot = (HashMap<String, AudiCar>) ois.readObject();
 		} catch (IOException e) {
-			// log.error(e.printStackTrace());
+			log.error("AudiCarDAO:readAudiCarDatabase:IoException");
 			return lot;
 		} catch (ClassNotFoundException e) {
-			// log.error(e.printStackTrace());
+			log.error("AudiCarDAO:readAudiCarDatabase:Class was not found!");
 			return lot;
 		}
 

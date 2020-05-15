@@ -2,6 +2,8 @@ package com.revature.Services;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 import com.revature.DAO.*;
 
 import com.revature.Objects.*;
@@ -12,6 +14,8 @@ import com.revature.Objects.*;
  */
 @SuppressWarnings("serial")
 public class RegisterUser implements Serializable {
+	private static Logger log = Logger.getRootLogger();
+	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	
 	/**
@@ -27,8 +31,8 @@ public class RegisterUser implements Serializable {
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.CUSTOMER);
 			userDatabase.addCustomer(username, newUser);
-			// TODO: Log user transactions
-			System.out.println("Created");
+			
+			log.info("RegisterUser:registerCustomer:Customer("+username+") created/registered");
 		}
 	}
 
@@ -46,8 +50,8 @@ public class RegisterUser implements Serializable {
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.EMPLOYEE);
 			userDatabase.addEmployee(username, newUser);
-			// TODO: Log user transactions
-			System.out.println("Created");
+			
+			log.info("RegisterUser:registerEmployee:Employee("+username+") created/registered");
 		}
 	}
 }

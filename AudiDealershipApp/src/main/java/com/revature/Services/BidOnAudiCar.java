@@ -3,6 +3,8 @@ package com.revature.Services;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Objects.*;
 
 /**
@@ -10,6 +12,7 @@ import com.revature.Objects.*;
  *
  */
 public class BidOnAudiCar {
+	private static Logger log = Logger.getRootLogger();
 	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
@@ -70,8 +73,11 @@ public class BidOnAudiCar {
 				System.out.println("|--User: " + iterator.next());
 			}
 			System.out.println("---------------------------------------");
+			log.info("BidOnAudiCar:acceptOffer:Employee checked current offers on car with VIN ("+ vinNumber +")");
 		} else {
-			System.out.println("Car not found");
+			System.out.println("Car not found.");
+			log.info("BidOnAudiCar:getCurrentOffers:Car not found");
+			System.out.println("---------------------------------------");
 		}
 	}
 
@@ -92,8 +98,13 @@ public class BidOnAudiCar {
 			user.setMonthlyPayment(user.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
 			rmvRegAudi.removeAudiCar(carVin);
 			System.out.println(user.getCarsOwned());
+			
+			System.out.println("---------------------------------------");
+			log.info("BidOnAudiCar:acceptOffer:Employee("+customer+") accepted offer - car with VIN ("+ carVin +") removed from lot and given to customer("+ customer +")");
 		} else {
-			System.out.println("Car not found");
+			System.out.println("Car not found.");
+			log.info("BidOnAudiCar:acceptOffer:Car not found");
+			System.out.println("---------------------------------------");
 		}
 
 	}
