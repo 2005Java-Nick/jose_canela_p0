@@ -11,24 +11,34 @@ import com.revature.DAO.UserDAO;
  */
 @SuppressWarnings("serial")
 public class UserDatabase implements Serializable {
-
-	private static HashMap<String, Customer> customers = new HashMap<>();
-	private static HashMap<String, Employee> employees = new HashMap<>();
+	private static UserDatabase userDatabase;
+	
+	private HashMap<String, Customer> customers = new HashMap<>();
+	private HashMap<String, Employee> employees = new HashMap<>();
 
 	// CUSTOMER METHODS
 	
 	/**
 	 * @return
 	 */
-	public static HashMap<String, Customer> getCustomers() {
+	public static UserDatabase getUserDatabase() {
+		if(userDatabase == null) {
+			userDatabase = new UserDatabase();
+		}
+		return userDatabase;
+	}
+	
+	public HashMap<String, Customer> getCustomers(){
+		UserDAO userDAO = new UserDAO();
+		userDatabase.customers = userDAO.readCustomer();
+		
 		return customers;
 	}
-
 	/**
 	 * @param username
 	 * @return
 	 */
-	public static Customer getCustomer(String username) {
+	public Customer getCustomer(String username) {
 		return customers.get(username);
 	}
 	
@@ -37,15 +47,17 @@ public class UserDatabase implements Serializable {
 	 * @param username
 	 * @param newUser
 	 */
-	public static void addCustomer(String username, Customer newUser) {
-		UserDatabase.customers.put(username, newUser);
+	public void addCustomer(String username, Customer newUser) {
+		UserDAO userDAO = new UserDAO();
+		userDatabase.customers.put(username, newUser);
+		userDAO.createCustomerDatabase(customers);
 	}
 	
 	/**
 	 * @param customers
 	 */
-	public static void setCustomers(HashMap<String, Customer> customers) {
-		UserDatabase.customers = customers;
+	public void setCustomers(HashMap<String, Customer> customers) {
+		userDatabase.customers = customers;
 	}
 
 	
@@ -54,7 +66,10 @@ public class UserDatabase implements Serializable {
 	/**
 	 * @return
 	 */
-	public static HashMap<String, Employee> getEmployees() {
+	public HashMap<String, Employee> getEmployees() {
+		UserDAO userDAO = new UserDAO();
+		userDatabase.employees = userDAO.readEmployees();
+		
 		return employees;
 	}
 
@@ -62,7 +77,7 @@ public class UserDatabase implements Serializable {
 	 * @param username
 	 * @return
 	 */
-	public static Employee getEmployee(String username) {
+	public Employee getEmployee(String username) {
 		return employees.get(username);
 	}
 
@@ -70,9 +85,9 @@ public class UserDatabase implements Serializable {
 	 * @param username
 	 * @param newUser
 	 */
-	public static void addEmployee(String username, Employee newUser) {
+	public void addEmployee(String username, Employee newUser) {
 		UserDAO userDAO = new UserDAO();
-		UserDatabase.employees.put(username, newUser);
+		userDatabase.employees.put(username, newUser);
 		userDAO.createEmployeeDatabase(employees);
 
 	}
@@ -80,7 +95,7 @@ public class UserDatabase implements Serializable {
 	/**
 	 * @param employees
 	 */
-	public static void setEmployees(HashMap<String, Employee> employees) {
-		UserDatabase.employees = employees;
+	public void setEmployees(HashMap<String, Employee> employees) {
+		userDatabase.employees = employees;
 	}
 }

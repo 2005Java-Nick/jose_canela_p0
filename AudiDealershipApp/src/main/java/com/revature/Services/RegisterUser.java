@@ -12,20 +12,21 @@ import com.revature.Objects.*;
  */
 @SuppressWarnings("serial")
 public class RegisterUser implements Serializable {
+	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	
 	/**
 	 * @param username
 	 * @param password
 	 */
 	public void registerCustomer(String username, String password) {
-		if (UserDatabase.getCustomers().containsKey(username)) {
+		if (userDatabase.getCustomers().containsKey(username)) {
 			System.out.println("User " + username + " is already in the database. Try another username.");
 		} else {
 			Customer newUser = new Customer();
 			newUser.setUsername(username);
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.CUSTOMER);
-			UserDatabase.addCustomer(username, newUser);
+			userDatabase.addCustomer(username, newUser);
 			// TODO: Log user transactions
 			System.out.println("Created");
 		}
@@ -37,14 +38,14 @@ public class RegisterUser implements Serializable {
 	 * @param systemPassword
 	 */
 	public void registerEmployee(String username, String password, String systemPassword) {
-		if (UserDatabase.getEmployees().containsKey(username)) {
+		if (userDatabase.getEmployees().containsKey(username)) {
 			System.out.println("User " + username + " is already in the database. Try another username.");
 		} else if (systemPassword.contains(DealershipDAO.getAppPassword())) {
 			Employee newUser = new Employee();
 			newUser.setUsername(username);
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.EMPLOYEE);
-			UserDatabase.addEmployee(username, newUser);
+			userDatabase.addEmployee(username, newUser);
 			// TODO: Log user transactions
 			System.out.println("Created");
 		}

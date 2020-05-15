@@ -22,12 +22,12 @@ public class AudiCarDAO implements Serializable {
 	 */
 	public boolean createAudiCarDatabase(HashMap<String, AudiCar> lot) {
 
-		try (FileOutputStream fos = new FileOutputStream("AudiCarLot.dat");
+		try (FileOutputStream fos = new FileOutputStream("AudiCarLot.dat", false);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);) {
 			oos.writeObject(lot);
 			return true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			// log.error(e.printStackTrace());
 			return false;
 		}
 	}
@@ -35,17 +35,18 @@ public class AudiCarDAO implements Serializable {
 	/**
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public HashMap<String, AudiCar> readAudiCarDatabase() {
-		HashMap<String, AudiCar> lot = null;
+		HashMap<String, AudiCar> lot = new HashMap<String, AudiCar>();
 		try (FileInputStream fis = new FileInputStream("AudiCarLot.dat");
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			lot = (HashMap<String, AudiCar>) ois.readObject();
 		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
+			// log.error(e.printStackTrace());
+			return lot;
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
+			// log.error(e.printStackTrace());
+			return lot;
 		}
 
 		return lot;

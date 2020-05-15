@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import com.revature.DAO.AudiCarDAO;
+//import com.revature.DAO.UserDAO;
 
 /**
  * @author josecanela
@@ -11,12 +12,22 @@ import com.revature.DAO.AudiCarDAO;
  */
 @SuppressWarnings("serial")
 public class AudiCarDatabase implements Serializable {
-	private static HashMap<String, AudiCar> lot = new HashMap<String, AudiCar>();
+	private static AudiCarDatabase audiCarDatabase;
+	private HashMap<String, AudiCar> lot = new HashMap<String, AudiCar>();
 
+	public static AudiCarDatabase getAudiCarDatabase() {
+		if(audiCarDatabase == null) {
+			audiCarDatabase = new AudiCarDatabase();
+		}
+		return audiCarDatabase;
+	}
+	
 	/**
 	 * @return
 	 */
-	public static HashMap<String, AudiCar> getLot() {
+	public HashMap<String, AudiCar> getLot() {
+		AudiCarDAO audiCarDAO = new AudiCarDAO();
+		audiCarDatabase.lot = audiCarDAO.readAudiCarDatabase();
 		return lot;
 	}
 
@@ -24,7 +35,7 @@ public class AudiCarDatabase implements Serializable {
 	 * @param carVin
 	 * @return
 	 */
-	public static AudiCar getAudiCar(String carVin) {
+	public AudiCar getAudiCar(String carVin) {
 		return lot.get(carVin);
 	}
 
@@ -32,7 +43,7 @@ public class AudiCarDatabase implements Serializable {
 	 * @param vin
 	 * @param car
 	 */
-	public static void addCar(String vin, AudiCar car) {
+	public void addCar(String vin, AudiCar car) {
 		AudiCarDAO carDAO = new AudiCarDAO();
 		lot.put(vin, car);
 		carDAO.createAudiCarDatabase(lot);
@@ -42,7 +53,7 @@ public class AudiCarDatabase implements Serializable {
 	/**
 	 * @param lot
 	 */
-	public static void setLot(HashMap<String, AudiCar> lot) {
-		AudiCarDatabase.lot = lot;
+	public void setLot(HashMap<String, AudiCar> lot) {
+		audiCarDatabase.lot = lot;
 	}
 }

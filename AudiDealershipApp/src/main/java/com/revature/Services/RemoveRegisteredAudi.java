@@ -8,13 +8,14 @@ import com.revature.Objects.*;
  */
 public class RemoveRegisteredAudi {
 	AuthenticateUser authUser = new AuthenticateUser();
-
+	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
+	
 	/**
 	 * @param carVin
 	 */
 	public void removeAudiCar(String carVin) {
 		// Remove Audi's from the lot and thus, the database using its VIN
-		AudiCarDatabase.getLot().remove(carVin);
+		audiCarDatabase.getLot().remove(carVin);
 
 	}
 }

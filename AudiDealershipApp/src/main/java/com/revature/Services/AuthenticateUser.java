@@ -7,7 +7,7 @@ import com.revature.Objects.*;
  *
  */
 public class AuthenticateUser {
-	
+	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	// CUSTOMER LOGIN
 	
 	/**
@@ -16,13 +16,14 @@ public class AuthenticateUser {
 	 * @return
 	 */
 	public boolean authenticateCustomer(String username, String password) {
-		if (UserDatabase.getCustomers().containsKey(username)
-				&& UserDatabase.getCustomer(username).getPassword().equals(password)) {
+		//TODO: LOG ---System.out Info---  System.out.println(userDatabase.getCustomers());
+		if (userDatabase.getCustomers().containsKey(username)
+				&& userDatabase.getCustomer(username).getPassword().equals(password)) {
 			System.out.println("You're now Logged in");
 			// TODO: Log success
 			return true;
 
-		} else if (!UserDatabase.getCustomers().containsKey(username)) {
+		} else if (!userDatabase.getCustomers().containsKey(username)) {
 			// TODO: Login User not found
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 			return false;
@@ -41,8 +42,8 @@ public class AuthenticateUser {
 	 * @return
 	 */
 	public boolean authenticateEmployee(String username, String password) {
-		if (UserDatabase.getEmployees().containsKey(username)
-				&& UserDatabase.getEmployee(username).getPassword().equals(password)) {
+		if (userDatabase.getEmployees().containsKey(username)
+				&& userDatabase.getEmployee(username).getPassword().equals(password)) {
 			System.out.println("You're now Logged in");
 			// TODO: Log success
 			return true;

@@ -3,6 +3,7 @@ package com.revature.Services;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.revature.Objects.*;
 
@@ -11,13 +12,15 @@ import com.revature.Objects.*;
  *
  */
 public class ViewAudi {
-	HashMap<String, AudiCar> cars = AudiCarDatabase.getLot();
+	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
+	
+	HashMap<String, AudiCar> cars = audiCarDatabase.getLot();
 
 	/**
 	 * 
 	 */
 	public void viewAudis() {
-		Iterator iterator = cars.entrySet().iterator();
+		Iterator<Entry<String, AudiCar>> iterator = cars.entrySet().iterator();
 		System.out.println("--------------Vin Number-------------Model-----------Year------------Offers--------");
 		while (iterator.hasNext()) {
 			Map.Entry<String, AudiCar> pair = (Map.Entry<String, AudiCar>) iterator.next();

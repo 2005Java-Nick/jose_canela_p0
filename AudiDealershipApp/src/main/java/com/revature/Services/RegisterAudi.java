@@ -7,6 +7,7 @@ import com.revature.Objects.*;
  *
  */
 public class RegisterAudi {
+	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
 	
 	/**
 	 * Works as a log as for the employee
@@ -17,12 +18,12 @@ public class RegisterAudi {
 	 */
 	public void addAudiCar(String vinNumber, String model, String year, Double price) {
 		AudiCar newAudiCar = new AudiCar();
-		if (!AudiCarDatabase.getLot().containsKey(vinNumber)) {
+		if (!audiCarDatabase.getLot().containsKey(vinNumber)) {
 			newAudiCar.setVinNumber(vinNumber);
 			newAudiCar.setModel(model);
 			newAudiCar.setYear(year);
 			newAudiCar.setPrice(price);
-			AudiCarDatabase.addCar(vinNumber, newAudiCar);
+			audiCarDatabase.addCar(vinNumber, newAudiCar);
 			// TODO: Log car created
 			System.out.println("Car created");
 		} else {
