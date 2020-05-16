@@ -32,7 +32,7 @@ public class RegisterUser implements Serializable {
 			newUser.setUserPolicy(UserPolicy.CUSTOMER);
 			userDatabase.addCustomer(username, newUser);
 			
-			log.info("RegisterUser:registerCustomer:Customer("+username+") created/registered");
+			log.info("registerCustomer:Customer("+username+") created/registered");
 		}
 	}
 
@@ -51,7 +51,7 @@ public class RegisterUser implements Serializable {
 			newUser.setUserPolicy(UserPolicy.EMPLOYEE);
 			userDatabase.addEmployee(username, newUser);
 			
-			log.info("RegisterUser:registerEmployee:Employee("+username+") created/registered");
+			log.info("registerEmployee:Employee("+username+") created/registered");
 		}
 	}
 }

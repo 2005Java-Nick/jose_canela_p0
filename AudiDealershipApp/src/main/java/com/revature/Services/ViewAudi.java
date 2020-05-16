@@ -30,7 +30,7 @@ public class ViewAudi {
 			Map.Entry<String, AudiCar> pair = (Map.Entry<String, AudiCar>) iterator.next();
 			System.out.println(pair.getValue().getCarRecord());
 			
-			log.info("ViewAudi:viewAudis:The available Audi's on the car lot were viewed");
+			log.info("viewAudis:The available Audi's on the car lot were viewed");
 		}
 	}
 }

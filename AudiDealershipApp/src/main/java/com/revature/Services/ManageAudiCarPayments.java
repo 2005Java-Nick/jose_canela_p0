@@ -26,7 +26,7 @@ public class ManageAudiCarPayments {
 		// Grabs the offer on a car that is in the lot and deletes the customer entry
 		audiCarDatabase.getLot().get(carVin).getOffers().clear();
 		
-		log.info("ManageAudiCarPayments:removeDropOffers:Employee("+employee+") removed all unaccepted offers");
+		log.info("removeDropOffers:Employee("+employee+") removed all unaccepted offers");
 	}
 
 	/**
@@ -41,22 +41,23 @@ public class ManageAudiCarPayments {
 		Double offer = bidOnAudiCar.getCarOffer(carVin, customerUsername);
 
 		// Returns a 2 year loan on the vehicle
-		log.info("ManageAudiCarPayments:calculateMonthlyPayment:Customer("+customerUsername+") Monthly Payment calculated");
+		log.info("calculateMonthlyPayment:Customer("+customerUsername+") Monthly Payment calculated");
 		return offer / 24;
 		}
 
 	/**
 	 * @param customer
 	 */
-	public static void viewAudiCarsAndPaymentInfo(String customer) {
-		Customer user = userDatabase.getCustomer(customer);
+	public void viewAudiCarsAndPaymentInfo(String customer) {
+		Customer user = userDatabase.getCustomers().get(customer);
 		System.out.println("Vehicles Owned by: " + customer + "\t Total Balance Due: $" + user.getMonthlyPayment());
+		System.out.println(user.getCarsOwned());
 		for (AudiCar car : user.getCarsOwned()) {
 			System.out.println("|-Vehicle: " + "VIN: " + car.getVinNumber() + ", Year: " + car.getYear() + ", Model: " + car.getModel() + " \n" + "|-Original Price: "
 					+ car.getPrice() + " Monthly Installments: $" + car.getPrice() / 24 + " Remaining payments:"
 					+ car.getRemainingPayments() + "\n");
 			
-			log.info("ManageAudiCarPayments:viewAudiCarsAndPaymentInfo:Customer("+customer+") viewed Owned Audi's and Payment Info");
+			log.info("viewAudiCarsAndPaymentInfo:Customer("+customer+") viewed Owned Audi's and Payment Info");
 		}
 	}
 
@@ -73,17 +74,17 @@ public class ManageAudiCarPayments {
 			
 			// Update Balance
 			user.setTotalBalance(user.getTotalBalance() - user.getMonthlyPayment());
-			log.info("ManageAudiCarPayments:makePayment:Customer Balance updated");
+			log.info("makePayment:Customer Balance updated");
 			
 			user.addPayment(formatter.format(now), user.getMonthlyPayment());
 			for (int i = 0; i < user.getCarsOwned().size(); i++) {
 				user.getCarsOwned().get(i).setRemainingPayments(user.getCarsOwned().get(i).getRemainingPayments() - 1);
 				
-				log.info("ManageAudiCarPayments:makePayment:Customer("+customer+") made monthly payment on each car");
+				log.info("makePayment:Customer("+customer+") made monthly payment on each car");
 			}
 
 		} catch (InterruptedException e) {
-			log.error("ManageAudiCarPayments:makePayment:InterruptedException - waiting or sleeping thread was\ninterrupted by another thread");
+			log.error("makePayment:InterruptedException - waiting or sleeping thread was\ninterrupted by another thread");
 		}
 
 	}
@@ -102,7 +103,7 @@ public class ManageAudiCarPayments {
 			System.out.println(pair);
 			
 		}
-		log.error("ManageAudiCarPayments:customerPaymentHistory:Customer("+customer+") viewed their Payment History");
+		log.error("customerPaymentHistory:Customer("+customer+") viewed their Payment History");
 	}
 
 	/**
@@ -120,6 +121,6 @@ public class ManageAudiCarPayments {
 			System.out.println(pair.getValue().getPaymentHistory());
 
 		}
-		log.error("ManageAudiCarPayments:employeePaymentView:Employee viewed All Customer Payments");
+		log.error("employeePaymentView:Employee viewed All Customer Payments");
 	}
 }

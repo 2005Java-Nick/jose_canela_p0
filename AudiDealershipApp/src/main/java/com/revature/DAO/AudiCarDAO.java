@@ -28,7 +28,7 @@ public class AudiCarDAO implements Serializable {
 			oos.writeObject(lot);
 			return true;
 		} catch (IOException e) {
-			log.error("AudiCarDAO:createAudiCarDatabase:IoException");
+			log.error("createAudiCarDatabase:IoException");
 			return false;
 		}
 	}
@@ -43,10 +43,10 @@ public class AudiCarDAO implements Serializable {
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			lot = (HashMap<String, AudiCar>) ois.readObject();
 		} catch (IOException e) {
-			log.error("AudiCarDAO:readAudiCarDatabase:IoException");
+			log.error("readAudiCarDatabase:IoException");
 			return lot;
 		} catch (ClassNotFoundException e) {
-			log.error("AudiCarDAO:readAudiCarDatabase:Class was not found!");
+			log.error("readAudiCarDatabase:Class was not found!");
 			return lot;
 		}
 

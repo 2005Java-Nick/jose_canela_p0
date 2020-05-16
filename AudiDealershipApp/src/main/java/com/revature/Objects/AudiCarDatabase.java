@@ -46,6 +46,7 @@ public class AudiCarDatabase implements Serializable {
 	public void addCar(String vin, AudiCar car) {
 		AudiCarDAO carDAO = new AudiCarDAO();
 		lot.put(vin, car);
+		//setLot(lot);
 		carDAO.createAudiCarDatabase(lot);
 
 	}
@@ -55,5 +56,10 @@ public class AudiCarDatabase implements Serializable {
 	 */
 	public void setLot(HashMap<String, AudiCar> lot) {
 		audiCarDatabase.lot = lot;
+	}
+	public void removeCar(String vin, AudiCar car) {
+		AudiCarDAO carDAO = new AudiCarDAO();
+		lot.remove(vin);
+		carDAO.createAudiCarDatabase(lot);
 	}
 }

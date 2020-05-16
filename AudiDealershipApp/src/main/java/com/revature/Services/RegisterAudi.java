@@ -29,9 +29,9 @@ public class RegisterAudi {
 			newAudiCar.setPrice(price);
 			audiCarDatabase.addCar(vinNumber, newAudiCar);
 			
-			log.info("RegisterAudi:addAudiCar:Car created/registered");
+			log.info("addAudiCar:Car created/registered");
 		} else {
-			log.info("RegisterAudi:addAudiCar:Car already exists in lot");
+			log.info("addAudiCar:Car already exists in lot");
 			System.out.println("Car ("+ vinNumber+ ", "+ model+ ", "+ year +", "+ price +") already exists in the car lot.");
 		}
 

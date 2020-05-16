@@ -24,17 +24,17 @@ public class AuthenticateUser {
 		if (userDatabase.getCustomers().containsKey(username)
 				&& userDatabase.getCustomer(username).getPassword().equals(password)) {
 			
-			log.info("AuthenticateUser:authenticateCustomer:Customer("+ username +") Login successful!");
+			log.info("authenticateCustomer:Customer("+ username +") Login successful!");
 
 			return true;
 
 		} else if (!userDatabase.getCustomers().containsKey(username)) {
-			log.info("AuthenticateUser:authenticateCustomer:Customer failed to login - invalid username or password");
+			log.info("authenticateCustomer:Customer failed to login - invalid username or password");
 			
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 			return false;
 		} else {
-			log.info("AuthenticateUser:authenticateCustomer:Customer failed to login.");
+			log.info("authenticateCustomer:Customer failed to login.");
 			return false;
 		}
 	}
@@ -50,10 +50,10 @@ public class AuthenticateUser {
 		if (userDatabase.getEmployees().containsKey(username)
 				&& userDatabase.getEmployee(username).getPassword().equals(password)) {
 			
-			log.info("AuthenticateUser:authenticateEmployee:Employee("+ username +") Login successful!");
+			log.info("authenticateEmployee:Employee("+ username +") Login successful!");
 			return true;
 		} else {
-			log.info("AuthenticateUser:authenticateEmployee:Employee failed to login - invalid username or password");
+			log.info("authenticateEmployee:Employee failed to login - invalid username or password");
 			
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 		

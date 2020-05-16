@@ -34,7 +34,7 @@ public class UserDAO implements Serializable {
 			oos.writeObject(employees);
 			return true;
 		} catch (IOException e) {
-			log.error("UserDAO:createEmployeeDatabase:IoException");
+			log.error("createEmployeeDatabase:IoException");
 			return false;
 		}
 	}
@@ -49,10 +49,10 @@ public class UserDAO implements Serializable {
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			employees = (HashMap<String, Employee>) ois.readObject();
 		} catch (IOException e) {
-			log.error("UserDAO:readEmployees:IoException");
+			log.error("readEmployees:IoException");
 			return employees;
 		} catch (ClassNotFoundException e) {
-			log.error("UserDAO:readEmployees:Class was not found!");
+			log.error("readEmployees:Class was not found!");
 			return employees;
 		}
 		return employees;
@@ -68,7 +68,7 @@ public class UserDAO implements Serializable {
 			oos.writeObject(customers);
 			return true;
 		} catch (IOException e) {
-			log.error("UserDAO:createCustomerDatabase:IoException");
+			log.error("createCustomerDatabase:IoException");
 			return false;
 		}
 	}
@@ -83,10 +83,10 @@ public class UserDAO implements Serializable {
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			customers = (HashMap<String, Customer>) ois.readObject();
 		} catch (IOException e) {
-			log.error("UserDAO:readCustomer:IoException");
+			log.error("readCustomer:IoException");
 			return customers;
 		} catch (ClassNotFoundException e) {
-			log.error("UserDAO:readCustomer:Class was not found!");
+			log.error("readCustomer:Class was not found!");
 			return customers;
 		}
 		return customers;

@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+import com.revature.DAO.AudiCarDAO;
 import com.revature.Objects.*;
 
 /**
@@ -16,6 +17,7 @@ public class BidOnAudiCar {
 	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
+	AudiCarDAO audiCarDAO = new AudiCarDAO();
 	
 	ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 	RemoveRegisteredAudi rmvRegAudi = new RemoveRegisteredAudi();
@@ -30,9 +32,13 @@ public class BidOnAudiCar {
 	public void addOffer(String vinNumber, String customer, Double offer) {
 		if (audiCarDatabase.getLot().containsKey(vinNumber)) {
 			AudiCar car = audiCarDatabase.getLot().get(vinNumber);
+			//car.setOffer(true);
 			car.setOffers(customer, offer);
 			car.setOffer(true);
+			audiCarDatabase.addCar(vinNumber, car);
+			
 			System.out.println("Offer Placed on : " + vinNumber);
+			
 		}
 	}
 
@@ -45,6 +51,7 @@ public class BidOnAudiCar {
 		if (audiCarDatabase.getLot().containsKey(vinNumber)) {
 			AudiCar car = audiCarDatabase.getLot().get(vinNumber);
 			car.getOffers().remove(customer);
+			log.info("removeOffer:Offer for car with VIN(" + vinNumber + ") removed for customer (" + customer + ")");
 		}
 	}
 
@@ -73,10 +80,10 @@ public class BidOnAudiCar {
 				System.out.println("|--User: " + iterator.next());
 			}
 			System.out.println("---------------------------------------");
-			log.info("BidOnAudiCar:acceptOffer:Employee checked current offers on car with VIN ("+ vinNumber +")");
+			log.info("acceptOffer:Employee checked current offers on car with VIN ("+ vinNumber +")");
 		} else {
 			System.out.println("Car not found.");
-			log.info("BidOnAudiCar:getCurrentOffers:Car not found");
+			log.info("getCurrentOffers:Car not found");
 			System.out.println("---------------------------------------");
 		}
 	}
@@ -89,21 +96,36 @@ public class BidOnAudiCar {
 	public void acceptOffer(String customer, String carVin) {
 
 		if (audiCarDatabase.getAudiCar(carVin) != null) {
-			ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
+			//AudiCarDAO audiCarDAO = new AudiCarDAO();
+			//ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 			AudiCar car = audiCarDatabase.getAudiCar(carVin);
 			Customer user = userDatabase.getCustomer(customer);
 			car.setPrice(car.getOffers().get(customer));
+			
 			user.addCars(car);
+			//user.addCars(car);
+			System.out.println(user.getCarsOwned());
 			user.setTotalBalance(car.getPrice());
 			user.setMonthlyPayment(user.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
-			rmvRegAudi.removeAudiCar(carVin);
-			System.out.println(user.getCarsOwned());
+			
+			audiCarDatabase.removeCar(carVin, car);
+			
+			/*for(int i = 0; i<user.getCarsOwned().size();i++) {
+				if(user.getCarsOwned().get(i).getVinNumber().equals(carVin)) {
+					
+					rmvRegAudi.removeAudiCar(carVin);
+				}
+			}*/
+			
+			//rmvRegAudi.removeAudiCar(carVin);
+			//System.out.println(audiCarDatabase.getLot().get("VIN"));
+			//audiCarDAO.createAudiCarDatabase(audiCarDatabase.getLot());
 			
 			System.out.println("---------------------------------------");
-			log.info("BidOnAudiCar:acceptOffer:Employee("+customer+") accepted offer - car with VIN ("+ carVin +") removed from lot and given to customer("+ customer +")");
+			log.info("acceptOffer:Employee accepted offer - car with VIN ("+ carVin +") removed from lot and given to customer("+ customer +")");
 		} else {
-			System.out.println("Car not found.");
-			log.info("BidOnAudiCar:acceptOffer:Car not found");
+			System.out.println("Sorry. This Audi cannot be found in the car lot. Please try again.");
+			log.info("acceptOffer:Car not found");
 			System.out.println("---------------------------------------");
 		}
 

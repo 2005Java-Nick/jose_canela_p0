@@ -23,7 +23,7 @@ public class RemoveUser {
 		if (authUser.authenticateEmployee(username, password)) {
 			userDatabase.getCustomers().remove(customer);
 			
-			log.info("RemoveUser:removeUser:User ("+ username +", "+ password +", "+ customer +") removed");
+			log.info("removeUser:User ("+ username +", "+ password +", "+ customer +") removed");
 		}
 
 	}
