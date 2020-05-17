@@ -15,7 +15,7 @@ public class UserDatabase implements Serializable {
 	
 	private HashMap<String, Customer> customers = new HashMap<>();
 	private HashMap<String, Employee> employees = new HashMap<>();
-
+	private HashMap<String, Customer> custs = new HashMap<>();
 	// CUSTOMER METHODS
 	
 	/**
@@ -28,10 +28,43 @@ public class UserDatabase implements Serializable {
 		return userDatabase;
 	}
 	
+	/**
+	 * @return
+	 */
+	public HashMap<String, Customer> getCusts(){ 
+		UserDAO userDAO = new UserDAO();
+		//userDAO.createCustomerDatabase(customers); 
+		userDatabase.custs = userDAO.readCustomer(); 
+		userDAO.createCustomerDatabase(custs); 
+		return custs; 
+		}
+	
+	public Customer getCust(String username) {
+		return custs.get(username);
+	}
+	
+	/**
+	 * @param username
+	 * @param newUser
+	 */
+	public void addCust(String username, Customer newUser) {
+		UserDAO userDAO = new UserDAO();
+		userDatabase.custs.put(username, newUser);
+		userDAO.createCustomerDatabase(custs);
+	}
+	 
+	public void setCusts(HashMap<String, Customer> custs) {
+		this.custs = custs;
+	}
+	
+	
 	public HashMap<String, Customer> getCustomers(){
 		UserDAO userDAO = new UserDAO();
-		userDatabase.customers = userDAO.readCustomer();
+		//userDatabase.customers = userDAO.readCustomer();
 		
+		userDAO.createCustomerDatabase(customers);
+		userDatabase.customers = userDAO.readCustomer();
+		//userDAO.createCustomerDatabase(customers);
 		return customers;
 	}
 	/**
@@ -47,6 +80,7 @@ public class UserDatabase implements Serializable {
 	 * @param username
 	 * @param newUser
 	 */
+	
 	public void addCustomer(String username, Customer newUser) {
 		UserDAO userDAO = new UserDAO();
 		userDatabase.customers.put(username, newUser);
@@ -98,4 +132,5 @@ public class UserDatabase implements Serializable {
 	public void setEmployees(HashMap<String, Employee> employees) {
 		userDatabase.employees = employees;
 	}
+
 }

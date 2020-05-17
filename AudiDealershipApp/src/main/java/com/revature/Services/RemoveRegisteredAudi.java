@@ -20,10 +20,9 @@ public class RemoveRegisteredAudi {
 	public void removeAudiCar(String carVin) {
 		// Remove Audi's from the lot and thus, the database using its VIN
 		AudiCar car = audiCarDatabase.getAudiCar(carVin);
-		//audiCarDatabase.getLot().remove(carVin);
 		
 		audiCarDatabase.removeCar(carVin, car);
-		//System.out.println(audiCarDatabase.getLot());
+		
 		log.info("removeAudiCar:Car with VIN ("+ carVin +") removed");
 	}
 	

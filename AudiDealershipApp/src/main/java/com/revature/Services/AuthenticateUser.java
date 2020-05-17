@@ -19,22 +19,19 @@ public class AuthenticateUser {
 	 * @return
 	 */
 	public boolean authenticateCustomer(String username, String password) {
-		log.info("Current Customers who have registered: "+ userDatabase.getCustomers());
+		log.info("Current Customers who have registered: "+ userDatabase.getCusts());
 		
-		if (userDatabase.getCustomers().containsKey(username)
-				&& userDatabase.getCustomer(username).getPassword().equals(password)) {
+		if (userDatabase.getCusts().containsKey(username)
+				&& userDatabase.getCust(username).getPassword().equals(password)) {
 			
 			log.info("authenticateCustomer:Customer("+ username +") Login successful!");
 
 			return true;
 
-		} else if (!userDatabase.getCustomers().containsKey(username)) {
+		} else {
 			log.info("authenticateCustomer:Customer failed to login - invalid username or password");
 			
 			System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
-			return false;
-		} else {
-			log.info("authenticateCustomer:Customer failed to login.");
 			return false;
 		}
 	}

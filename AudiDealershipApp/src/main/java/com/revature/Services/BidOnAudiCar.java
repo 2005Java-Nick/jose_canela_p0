@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 
 import com.revature.DAO.AudiCarDAO;
+import com.revature.DAO.UserDAO;
 import com.revature.Objects.*;
 
 /**
@@ -18,11 +19,12 @@ public class BidOnAudiCar {
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
 	AudiCarDAO audiCarDAO = new AudiCarDAO();
+	UserDAO userDAO = new UserDAO();
 	
 	ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 	RemoveRegisteredAudi rmvRegAudi = new RemoveRegisteredAudi();
 
-	
+	Customer user = new Customer(); 
 	/**
 	 * User doesn't need to authenticate because they're already past the login screen
 	 * @param vinNumber
@@ -96,30 +98,26 @@ public class BidOnAudiCar {
 	public void acceptOffer(String customer, String carVin) {
 
 		if (audiCarDatabase.getAudiCar(carVin) != null) {
-			//AudiCarDAO audiCarDAO = new AudiCarDAO();
-			//ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
+			
 			AudiCar car = audiCarDatabase.getAudiCar(carVin);
-			Customer user = userDatabase.getCustomer(customer);
+			
+			user = userDatabase.getCusts().get(customer); 
+			Customer cust = userDatabase.getCustomers().get(customer);
+			
 			car.setPrice(car.getOffers().get(customer));
 			
+			cust.addCars(car);
+			
+			cust.setTotalBalance(car.getPrice());
+			cust.setMonthlyPayment(cust.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
+			
+			user = cust;
 			user.addCars(car);
-			//user.addCars(car);
-			System.out.println(user.getCarsOwned());
-			user.setTotalBalance(car.getPrice());
-			user.setMonthlyPayment(user.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
 			
+			//userDatabase.setCustomers(userDAO.readCustomer()); 
+			userDAO.createCustomerDatabase(userDatabase.getCustomers()); 
+			//userDAO.createCustomerDatabase(userDatabase.getCusts());
 			audiCarDatabase.removeCar(carVin, car);
-			
-			/*for(int i = 0; i<user.getCarsOwned().size();i++) {
-				if(user.getCarsOwned().get(i).getVinNumber().equals(carVin)) {
-					
-					rmvRegAudi.removeAudiCar(carVin);
-				}
-			}*/
-			
-			//rmvRegAudi.removeAudiCar(carVin);
-			//System.out.println(audiCarDatabase.getLot().get("VIN"));
-			//audiCarDAO.createAudiCarDatabase(audiCarDatabase.getLot());
 			
 			System.out.println("---------------------------------------");
 			log.info("acceptOffer:Employee accepted offer - car with VIN ("+ carVin +") removed from lot and given to customer("+ customer +")");

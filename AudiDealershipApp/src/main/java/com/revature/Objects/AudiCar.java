@@ -172,7 +172,7 @@ public class AudiCar implements Serializable {
 	 * @return
 	 */
 	public String getCarRecord() {
-		return "| " + this.vinNumber + "     \t| " + this.model + "      \t| " + this.year + "     \t| " + this.offer
+		return "| " + this.vinNumber + "     \t| " + this.model + "      \t| " + this.year + "     \t| " + this.price + "     \t| " + this.offer
 				+ "  \t|";
 	}
                   

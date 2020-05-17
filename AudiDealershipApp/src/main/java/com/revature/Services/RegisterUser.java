@@ -1,6 +1,7 @@
 package com.revature.Services;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
@@ -17,23 +18,43 @@ public class RegisterUser implements Serializable {
 	private static Logger log = Logger.getRootLogger();
 	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
-	
+	public HashMap<String, Customer> customers = userDatabase.getCustomers();
+	public Customer newCustomer = new Customer();
 	/**
 	 * @param username
 	 * @param password
 	 */
 	public void registerCustomer(String username, String password) {
-		if (userDatabase.getCustomers().containsKey(username)) {
+		if (userDatabase.getCusts().containsKey(username)) {
 			System.out.println("User " + username + " is already in the database. Try another username.");
 		} else {
 			Customer newUser = new Customer();
 			newUser.setUsername(username);
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.CUSTOMER);
-			userDatabase.addCustomer(username, newUser);
+			//Customer newCustomer = new Customer();
+			
+			newCustomer = newUser;
+			userDatabase.addCust(username, newUser);
+			userDatabase.addCustomer(username, newCustomer);
+			
+			//customers = userDatabase.getCusts();
+			//userDatabase.setCustomers(customers);
 			
 			log.info("registerCustomer:Customer("+username+") created/registered");
 		}
+		
+		//if (userDatabase.getCustomers().containsKey(username)) {
+		//	System.out.println("User " + username + " is already in the database. Try another username.");
+		//} else {
+		//	Customer newUser = new Customer();
+		//	newUser.setUsername(username);
+		//	newUser.setPassword(password);
+		//	newUser.setUserPolicy(UserPolicy.CUSTOMER);
+		//	userDatabase.addCustomer(username, newUser);
+			
+		//	log.info("registerCustomer:Customer("+username+") created/registered");
+		//}
 	}
 
 	/**

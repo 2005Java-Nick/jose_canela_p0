@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
+import com.revature.DAO.AudiCarDAO;
+//import com.revature.DAO.UserDAO;
 import com.revature.Objects.*;
 
 /**
@@ -21,6 +23,9 @@ public class ManageAudiCarPayments {
 	
 	private static UserDatabase userDatabase = UserDatabase.getUserDatabase();
 	private static AudiCarDatabase audiCarDatabase = AudiCarDatabase.getAudiCarDatabase();
+	AudiCarDAO audiCarDAO = new AudiCarDAO();
+	AudiCar car = new AudiCar();
+	HashMap<AudiCar, String> hm = new HashMap<AudiCar, String>();
 	
 	public void removeDropOffers(String carVin, String employee, String password) {
 		// Grabs the offer on a car that is in the lot and deletes the customer entry
@@ -49,13 +54,16 @@ public class ManageAudiCarPayments {
 	 * @param customer
 	 */
 	public void viewAudiCarsAndPaymentInfo(String customer) {
-		Customer user = userDatabase.getCustomers().get(customer);
-		System.out.println("Vehicles Owned by: " + customer + "\t Total Balance Due: $" + user.getMonthlyPayment());
-		System.out.println(user.getCarsOwned());
-		for (AudiCar car : user.getCarsOwned()) {
+		//Customer user = userDatabase.getCusts().get(customer);
+		System.out.println("Vehicles Owned by: " + customer);
+		//System.out.println(user.getCarsOwned());
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+						   //user.getCarsOwned()
+		for (AudiCar car : hm.keySet()) {
 			System.out.println("|-Vehicle: " + "VIN: " + car.getVinNumber() + ", Year: " + car.getYear() + ", Model: " + car.getModel() + " \n" + "|-Original Price: "
-					+ car.getPrice() + " Monthly Installments: $" + car.getPrice() / 24 + " Remaining payments:"
-					+ car.getRemainingPayments() + "\n");
+					+ car.getPrice() + ", Monthly Installments: $" + car.getPrice() / 24 + ", Remaining payments:"
+					+ car.getRemainingPayments());
+			System.out.println("--------------------------------------------------------------------------------------------------------");
 			
 			log.info("viewAudiCarsAndPaymentInfo:Customer("+customer+") viewed Owned Audi's and Payment Info");
 		}
@@ -65,12 +73,12 @@ public class ManageAudiCarPayments {
 	 * @param customer
 	 */
 	public void makePayment(String customer) {
-
+			System.out.println(customer);
 		try {
 			TimeUnit.SECONDS.sleep(1);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			Customer user = userDatabase.getCustomer(customer);
+			Customer user = userDatabase.getCusts().get(customer);
 			
 			// Update Balance
 			user.setTotalBalance(user.getTotalBalance() - user.getMonthlyPayment());
@@ -80,6 +88,11 @@ public class ManageAudiCarPayments {
 			for (int i = 0; i < user.getCarsOwned().size(); i++) {
 				user.getCarsOwned().get(i).setRemainingPayments(user.getCarsOwned().get(i).getRemainingPayments() - 1);
 				
+				hm.put(user.getCarsOwned().get(i), customer);
+		
+				//audiCarDAO.createAudiCarDatabase(hm);
+				
+				//System.out.println(user.getCarsOwned().get(i).getRemainingPayments());
 				log.info("makePayment:Customer("+customer+") made monthly payment on each car");
 			}
 
@@ -95,13 +108,14 @@ public class ManageAudiCarPayments {
 	 */
 	public void customerPaymentHistory(String customer) {
 		
-		Customer user = userDatabase.getCustomer(customer);
+		Customer user = userDatabase.getCust(customer);
 		Iterator<Entry<String, Double>> iterator = user.getPaymentHistory().entrySet().iterator();
 		System.out.println("Payment History:");
+		System.out.println("-------------------------------------------------------");
 		while (iterator.hasNext()) {
 			Map.Entry<String, Double> pair = (Map.Entry<String, Double>) iterator.next();
 			System.out.println(pair);
-			
+			System.out.println("-------------------------------------------------------");
 		}
 		log.error("customerPaymentHistory:Customer("+customer+") viewed their Payment History");
 	}
@@ -111,15 +125,17 @@ public class ManageAudiCarPayments {
 	 */
 	public void employeePaymentView() {
 		
-		HashMap<String, Customer> payments = userDatabase.getCustomers();
+		HashMap<String, Customer> payments = userDatabase.getCusts();
 
 		Iterator<Entry<String, Customer>> iterator = payments.entrySet().iterator();
 		System.out.println("Customer Payment History:");
+		System.out.println("-------------------------------------------------------");
 		while (iterator.hasNext()) {
 			Map.Entry<String, Customer> pair = (Map.Entry<String, Customer>) iterator.next();
 			System.out.println(pair.getValue().getUsername());
 			System.out.println(pair.getValue().getPaymentHistory());
-
+			System.out.println("-------------------------------------------------------");
+			
 		}
 		log.error("employeePaymentView:Employee viewed All Customer Payments");
 	}

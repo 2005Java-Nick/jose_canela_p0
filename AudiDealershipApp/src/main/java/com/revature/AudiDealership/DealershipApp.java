@@ -24,12 +24,7 @@ public class DealershipApp {
 	 */
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("log4j.properties");
-		// UserDAO userDAO = new UserDAO();
-		// AudiCarDAO audiCarDAO = new AudiCarDAO();
-		// DealershipDAO dealershipDAO = new DealershipDAO();
 		
-		// UserDatabase userDatabase = new UserDatabase();
-		// AudiCarDatabase audiCarDatabase = new AudiCarDatabase();
 		log.info("mainMenu:Running Main Menu");
 		mainMenu();
 		
@@ -41,7 +36,7 @@ public class DealershipApp {
 	 * 
 	 */
 	public static void mainMenu() {
-		//AuthenticateUser authUser = new AuthenticateUser();
+		
 		Boolean run = true;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Welcome to The Audi Dealership App!");
@@ -93,22 +88,22 @@ public class DealershipApp {
 		String username;
 		String password;
 		String userInput;
-		Scanner sc = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 
 		// Prompt
 		System.out.println("LOGIN MENU:");
 		System.out.println("1. Customer Login: \n2. Employee Login: \n3. Exit");
-		userInput = sc.nextLine();
+		userInput = scan.nextLine();
 
 		switch (userInput) {
 		case "1":
 			// CUSTOMER LOGIN
 			System.out.println("Username: ");
-			userInput = sc.nextLine();
+			userInput = scan.nextLine();
 			username = userInput;
 
 			System.out.println("Password : ");
-			userInput = sc.nextLine();
+			userInput = scan.nextLine();
 			password = userInput;
 
 			if (authUser.authenticateCustomer(username, password)) {
@@ -117,7 +112,6 @@ public class DealershipApp {
 			} else {
 				log.info("signInMenu:Customer failed to login - invalid username or password");
 				
-				System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 				signInMenu();
 				log.info("signInMenu:Customer back to SignIn Menu");
 				
@@ -128,19 +122,18 @@ public class DealershipApp {
 		case "2":
 			// EMPLOYEE LOGIN
 			System.out.println("Username: ");
-			userInput = sc.nextLine();
+			userInput = scan.nextLine();
 			username = userInput;
 
 			System.out.println("Password : ");
-			userInput = sc.nextLine();
+			userInput = scan.nextLine();
 			password = userInput;
 			if (authUser.authenticateEmployee(username, password)) {
-				employeeMenu(username);
+				employeeMenu(username,password);
 				log.info("signInMenu:Running Employee Menu.");
 			} else {
 				log.info("signInMenu:Employee failed to login - invalid username or password");
 				
-				// System.out.println("Your login attempt has failed.\nMake sure the username and password are correct.\n");
 				signInMenu();
 				log.info("signInMenu:Employee back to SignIn Menu");
 			}
@@ -155,6 +148,7 @@ public class DealershipApp {
 		default:
 			System.out.println("Invalid choice, try again...");
 			log.info("signInMenu:Invalid SignIn Menu Choice Given");
+			signInMenu();
 			break;
 		}
 
@@ -170,20 +164,20 @@ public class DealershipApp {
 		String username;
 		String password;
 		String rootPassword;
-		Scanner s = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 
 		System.out.println("\nREGISTRATION MENU");
 		System.out.println("|-1. Customer Registration: \n|-2. Employee Registration: \n|-3. Exit\n");
-		userInput = s.nextLine();
+		userInput = scan.nextLine();
 
 		switch (userInput) {
 		case "1":
 			System.out.println("Username: ");
-			userInput = s.nextLine();
+			userInput = scan.nextLine();
 			username = userInput;
 
 			System.out.println("Password : ");
-			userInput = s.nextLine();
+			userInput = scan.nextLine();
 			password = userInput;
 
 			regUser.registerCustomer(username, password);
@@ -193,15 +187,15 @@ public class DealershipApp {
 
 		case "2":
 			System.out.println("Username: ");
-			userInput = s.nextLine();
+			userInput = scan.nextLine();
 			username = userInput;
 
 			System.out.println("Password : ");
-			userInput = s.nextLine();
+			userInput = scan.nextLine();
 			password = userInput;
 
 			System.out.println("Root password : ");
-			userInput = s.nextLine();
+			userInput = scan.nextLine();
 			rootPassword = userInput;
 
 			regUser.registerEmployee(username, password, rootPassword);
@@ -216,6 +210,7 @@ public class DealershipApp {
 
 		default:
 			System.out.println("Invalid choice, try again...");
+			registrationMenu();
 			log.info("registrationMenu:Invalid Registration Menu Choice Given");
 			break;
 		}
@@ -228,15 +223,15 @@ public class DealershipApp {
 	public static void customerMenu(String username) {
 		String userInput, vinNumber;
 		Double offer;
-		Scanner sca = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 		ViewAudi viewAudi = new ViewAudi();
 		BidOnAudiCar bidOnAudi = new BidOnAudiCar();
 		ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 
 		System.out.println("CUSTOMER MENU: \n Hello " + username);
 		System.out.println(
-				"|-1. Explore Cars: \n|-2. Make Offer: \n|-3. View Cars: \n|-4. View Remaining Balance: \n|-5. Make Monthly Payment: \n|-6. Sign Out");
-		userInput = sca.nextLine();
+				"|-1. Explore Cars: \n|-2. Make Offer: \n|-3. View My Cars: \n|-4. View My Payment History: \n|-5. Make Monthly Payment: \n|-6. Sign Out");
+		userInput = scan.nextLine();
 
 		switch (userInput) {
 		case "1":
@@ -249,24 +244,24 @@ public class DealershipApp {
 			System.out.println("--MAKE OFFER--");
 			viewAudi.viewAudis();
 			System.out.println("Enter Vehicle Identification Number(VIN): ");
-			vinNumber = sca.nextLine();
-			sca.nextLine();
+			vinNumber = scan.nextLine();
+			scan.nextLine();
 			System.out.println("Enter Amount: ");
-			offer = sca.nextDouble();
+			offer = scan.nextDouble();
 			bidOnAudi.addOffer(vinNumber, username, offer);
 			customerMenu(username);
 			
 			log.info("customerMenu: Customer("+ username +") made an offer ($" + offer + ") on car with VIN (" + vinNumber +") and given Customer Menu Options");
 			break;
 		case "3":
-			System.out.println("--VIEW CARS--");	
+			System.out.println("--VIEW MY CARS--");	
 			mngAudiCarPay.viewAudiCarsAndPaymentInfo(username);
 			customerMenu(username);
 			
 			log.info("customerMenu: Customer("+ username +") given Customer Menu Options");
 			break;
 		case "4":
-			System.out.println("--VIEW REMAINING BALANCE--");
+			System.out.println("--VIEW MY PAYMENT HISTORY--");
 			mngAudiCarPay.customerPaymentHistory(username);
 			customerMenu(username);
 			
@@ -287,6 +282,7 @@ public class DealershipApp {
 		default:
 			System.out.println("Invalid choice, try again...");
 			log.info("customerMenu:Invalid Customer Menu Choice Given");
+			customerMenu(username);
 			break;
 		}
 	}
@@ -295,25 +291,26 @@ public class DealershipApp {
 	/**
 	 * @param username
 	 */
-	public static void employeeMenu(String username) {
+	public static void employeeMenu(String username, String password) {
 		ViewAudi viewAudi = new ViewAudi();
 		BidOnAudiCar bidOnAudi = new BidOnAudiCar();
 		RegisterAudi regAudi = new RegisterAudi();
 		RemoveRegisteredAudi rmvRegAudi = new RemoveRegisteredAudi();
+		RemoveUser rmvCustomer = new RemoveUser();
 		ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 		String userInput, vinNumber, model, year, customer;
 		Double price;
-		Scanner scann = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 
 		System.out.println("\nEMPLOYEE MENU: \n Hello " + username);
 		System.out.println(
-				"|-1. Explore Cars: \n|-2. Add Cars: \n|-3. Accept Offers: \n|-4. Remove Car From Lot: \n|-5. View All Customer Payments: \n|-6. Sign Out");
-		userInput = scann.nextLine();
+				"|-1. Explore Cars: \n|-2. Add Cars: \n|-3. Accept Offers: \n|-4. Remove Car From Lot: \n|-5. View All Customer Payments: \n|-6. Delete Customer Account: \n|-7. Sign Out");
+		userInput = scan.nextLine();
 
 		switch (userInput) {
 		case "1":
 			viewAudi.viewAudis();
-			employeeMenu(username);
+			employeeMenu(username, password);
 			log.info("customerMenu: Employee("+ username +") Viewed Audi's in car lot and given Employee Menu Options");
 			break;
 			
@@ -322,27 +319,27 @@ public class DealershipApp {
 			do {
 				System.out.println("--ADD CARS--");
 				System.out.println("Enter VIN:");
-				vinNumber = scann.nextLine();
+				vinNumber = scan.nextLine();
 				System.out.println("Enter Model:");
-				model = scann.nextLine();
+				model = scan.nextLine();
 				System.out.println("Enter Year:");
-				year = scann.nextLine();
-				scann.nextLine();
+				year = scan.nextLine();
+				scan.nextLine();
 				System.out.println("Enter price:");
-				price = scann.nextDouble();
+				price = scan.nextDouble();
 				regAudi.addAudiCar(vinNumber, model, year, price);
 				vinNumber = "";
 				model = "";
 				year = "";
 				price = 0D;
-				employeeMenu(username);
+				employeeMenu(username, password);
 				
 				
 				System.out.println("Add Another Audi? (Y) or (N)");
-				exit = scann.nextLine();
+				exit = scan.nextLine();
 
 			} while (exit.equals("Y"));
-			employeeMenu(username);
+			employeeMenu(username, password);
 			
 			log.info("employeeMenu: Employee("+ username +") stopped adding Audi's and given Employee Menu Options");
 			break;
@@ -350,26 +347,27 @@ public class DealershipApp {
 			System.out.println("\n--ACCEPT OFFER--");
 			viewAudi.viewAudis();
 			System.out.println("Enter VIN: ");
-			vinNumber = scann.nextLine();
+			vinNumber = scan.nextLine();
 			bidOnAudi.getCurrentOffers(vinNumber);
 			System.out.println("Do you want to accept any offers? (Y) or (N)");
-			exit = scann.nextLine();
+			exit = scan.nextLine();
 			switch (exit) {
 			case "Y":
 				System.out.println("Enter Customer: ");
-				customer = scann.nextLine();
+				customer = scan.nextLine();
 				bidOnAudi.acceptOffer(customer, vinNumber);
 				customer = "";
 				vinNumber = "";
-				employeeMenu(username);
+				employeeMenu(username, password);
 				
 				log.info("employeeMenu: Employee("+ username +") given Employee Menu Options");
 				break;
 			case "N":
-				employeeMenu(username);
+				employeeMenu(username, password);
 				log.info("employeeMenu: Employee("+ username +") stopped accepting offers and given Employee Menu Options");
 			default:
-				System.out.println("Invalid Entry\n");
+				System.out.println("Invalid Entry. Try again.\n");
+				employeeMenu(username, password);
 				log.info("employeeMenu:Invalid Employee Entry. Employee("+ username +") should enter Y or N");
 			}
 
@@ -378,21 +376,34 @@ public class DealershipApp {
 			System.out.println("--REMOVE CARS--");
 			viewAudi.viewAudis();
 			System.out.println("Enter Car VIN:");
-			vinNumber = scann.nextLine();
+			vinNumber = scan.nextLine();
 			rmvRegAudi.removeAudiCar(vinNumber);
 			vinNumber = "";
-			employeeMenu(username);
+			employeeMenu(username, password);
 			
 			log.info("employeeMenu: Employee("+ username +") given Employee Menu Options");
 			break;
 		case "5":
 			System.out.println("--VIEW ALL PAYMENTS--");
 			mngAudiCarPay.employeePaymentView();
-			employeeMenu(username);
+			employeeMenu(username, password);
 			
 			log.info("employeeMenu: Employee("+ username +") given Employee Menu Options");
 			break;
 		case "6":
+			System.out.println("--REMOVE CUSTOMER--\n");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			rmvCustomer.viewCustomers();
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("Enter Customer: ");
+			customer = scan.nextLine();
+			rmvCustomer.removeUser(username, password, customer);
+
+			employeeMenu(username, password);
+			
+			log.info("employeeMenu: Employee("+ username +") Removed Customer ("+ customer +")");
+			break;
+		case "7":
 			System.out.println("--SIGNED OUT--\n");
 			signInMenu();
 			
@@ -401,6 +412,7 @@ public class DealershipApp {
 		default:
 			System.out.println("Invalid choice, try again...");
 			log.info("employeeMenu:Invalid Employee Menu Choice Given");
+			employeeMenu(username, password);
 			break;
 		}
 	}

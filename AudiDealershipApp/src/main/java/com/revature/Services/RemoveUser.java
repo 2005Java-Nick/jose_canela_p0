@@ -20,11 +20,16 @@ public class RemoveUser {
 	 * @param customer
 	 */
 	public void removeUser(String username, String password, String customer) {
+	
 		if (authUser.authenticateEmployee(username, password)) {
-			userDatabase.getCustomers().remove(customer);
+			userDatabase.getCusts().remove(customer);
 			
 			log.info("removeUser:User ("+ username +", "+ password +", "+ customer +") removed");
 		}
 
+	}
+	
+	public void viewCustomers() {
+		System.out.println(userDatabase.getCusts().keySet()); 
 	}
 }
