@@ -25,36 +25,21 @@ public class RegisterUser implements Serializable {
 	 * @param password
 	 */
 	public void registerCustomer(String username, String password) {
-		if (userDatabase.getCusts().containsKey(username)) {
+		if (userDatabase.getCustomers().containsKey(username)) {
 			System.out.println("User " + username + " is already in the database. Try another username.");
 		} else {
 			Customer newUser = new Customer();
 			newUser.setUsername(username);
 			newUser.setPassword(password);
 			newUser.setUserPolicy(UserPolicy.CUSTOMER);
-			//Customer newCustomer = new Customer();
 			
-			newCustomer = newUser;
-			userDatabase.addCust(username, newUser);
-			userDatabase.addCustomer(username, newCustomer);
 			
-			//customers = userDatabase.getCusts();
-			//userDatabase.setCustomers(customers);
+			userDatabase.addCustomer(username, newUser);
+			
 			
 			log.info("registerCustomer:Customer("+username+") created/registered");
 		}
 		
-		//if (userDatabase.getCustomers().containsKey(username)) {
-		//	System.out.println("User " + username + " is already in the database. Try another username.");
-		//} else {
-		//	Customer newUser = new Customer();
-		//	newUser.setUsername(username);
-		//	newUser.setPassword(password);
-		//	newUser.setUserPolicy(UserPolicy.CUSTOMER);
-		//	userDatabase.addCustomer(username, newUser);
-			
-		//	log.info("registerCustomer:Customer("+username+") created/registered");
-		//}
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class RemoveUser {
 	public void removeUser(String username, String password, String customer) {
 	
 		if (authUser.authenticateEmployee(username, password)) {
-			userDatabase.getCusts().remove(customer);
+			userDatabase.getCustomers().remove(customer);
 			
 			log.info("removeUser:User ("+ username +", "+ password +", "+ customer +") removed");
 		}
@@ -30,6 +30,6 @@ public class RemoveUser {
 	}
 	
 	public void viewCustomers() {
-		System.out.println(userDatabase.getCusts().keySet()); 
+		System.out.println(userDatabase.getCustomers().keySet()); 
 	}
 }

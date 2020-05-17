@@ -23,8 +23,7 @@ public class BidOnAudiCar {
 	
 	ManageAudiCarPayments mngAudiCarPay = new ManageAudiCarPayments();
 	RemoveRegisteredAudi rmvRegAudi = new RemoveRegisteredAudi();
-
-	Customer user = new Customer(); 
+	
 	/**
 	 * User doesn't need to authenticate because they're already past the login screen
 	 * @param vinNumber
@@ -100,23 +99,20 @@ public class BidOnAudiCar {
 		if (audiCarDatabase.getAudiCar(carVin) != null) {
 			
 			AudiCar car = audiCarDatabase.getAudiCar(carVin);
-			
-			user = userDatabase.getCusts().get(customer); 
-			Customer cust = userDatabase.getCustomers().get(customer);
+			Customer user = userDatabase.getCustomer(customer);
 			
 			car.setPrice(car.getOffers().get(customer));
 			
-			cust.addCars(car);
-			
-			cust.setTotalBalance(car.getPrice());
-			cust.setMonthlyPayment(cust.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
-			
-			user = cust;
 			user.addCars(car);
 			
+			user.setTotalBalance(car.getPrice());
+			user.setMonthlyPayment(user.getMonthlyPayment() + mngAudiCarPay.calculateMonthlyPayment(customer, carVin));
+			
+			
 			//userDatabase.setCustomers(userDAO.readCustomer()); 
-			userDAO.createCustomerDatabase(userDatabase.getCustomers()); 
-			//userDAO.createCustomerDatabase(userDatabase.getCusts());
+		
+			
+			//audiCarDAO.createAudiCarDatabase(audiCarDatabase.getLot());
 			audiCarDatabase.removeCar(carVin, car);
 			
 			System.out.println("---------------------------------------");

@@ -32,6 +32,8 @@ public class UserDAO implements Serializable {
 		try (FileOutputStream fos = new FileOutputStream("EmployeeDatabase.dat", false);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);) {
 			oos.writeObject(employees);
+			//oos.close();
+			//fos.close();
 			return true;
 		} catch (IOException e) {
 			log.error("createEmployeeDatabase:IoException");
@@ -48,6 +50,8 @@ public class UserDAO implements Serializable {
 		try (FileInputStream fis = new FileInputStream("EmployeeDatabase.dat");
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			employees = (HashMap<String, Employee>) ois.readObject();
+			//ois.close();
+			//fis.close();
 		} catch (IOException e) {
 			log.error("readEmployees:IoException");
 			return employees;
@@ -66,6 +70,8 @@ public class UserDAO implements Serializable {
 		try (FileOutputStream fos = new FileOutputStream("CustomerDatabase.dat", false);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);) {
 			oos.writeObject(customers);
+			//oos.close();
+			//fos.close();
 			return true;
 		} catch (IOException e) {
 			log.error("createCustomerDatabase:IoException");
@@ -82,6 +88,8 @@ public class UserDAO implements Serializable {
 		try (FileInputStream fis = new FileInputStream("CustomerDatabase.dat");
 				ObjectInputStream ois = new ObjectInputStream(fis);) {
 			customers = (HashMap<String, Customer>) ois.readObject();
+			//ois.close();
+			//fis.close();
 		} catch (IOException e) {
 			log.error("readCustomer:IoException");
 			return customers;
